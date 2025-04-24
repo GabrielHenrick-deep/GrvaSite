@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
-import { members } from '../data/members';
+
 import { MemberCard } from '../components/MemberCard';
-import type { MemberCategory } from '../types/member';
+import type { Member, MemberCategory } from '../types/member';
 
 const categories: MemberCategory[] = ['Graduação', 'Mestrado', 'Doutorado', 'Pós-Doutorado'];
 
 export function MembersPage() {
+  const [members, setMembers] = useState<Member[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<MemberCategory | 'all'>('all');
+
+  useEffect(() => {
+    fetch('http://localhost:3001/members')
+      .then(res => res.json())
+      .then(data => {
+        console.log('Dados recebidos:', data); // 👈 veja se os dados são o que espera
+        setMembers(data);
+      })
+      .catch(err => console.error('Erro ao buscar membros:', err));
+  }, []);
+  
 
   const filteredMembers = members.filter(member => {
     const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase());

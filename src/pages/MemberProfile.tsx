@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail, Linkedin, BookOpen, Award, ExternalLink } from 'lucide-react';
-import { members } from '../data/members';
+import { Member, Publication } from '../types/member';
 
 export function MemberProfile() {
   const { id } = useParams();
+  
   const navigate = useNavigate();
-  const member = members.find(m => m.id === id);
+  const [member, setMember] = useState<Member | null>(null);
+  
+  useEffect(() => {
+    if (!id) return;
+  
+    fetch(`http://localhost:3001/members/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log('Membro recebido:', data);
+        setMember({
+          ...data,
+          // Faz split nas strings separadas por vírgula
+          proficiencies: Array.isArray(data.proficiencies)
+            ? data.proficiencies
+            : typeof data.proficiencies === 'string'
+            ? data.proficiencies.split(',').map((s: string) => s.trim())
+            : [],
+          education: typeof data.education === 'string'
+            ? data.education.split(',').map((s: string) => s.trim())
+            : [],
+          awards: typeof data.awards === 'string'
+            ? data.awards.split(',').map((s: string) => s.trim())
+            : [],
+          publications: Array.isArray(data.publications)
+            ? data.publications
+            : [] as Publication[],
+        });
+      })
+      .catch(err => console.error('Erro ao buscar membro:', err));
+  }, [id]);
+  
 
-  if (!member) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <p className="text-xl text-gray-300">Membro não encontrado</p>
-      </div>
-    );
-  }
+  
 
+  
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 text-gray-300">
       <div className="max-w-4xl mx-auto">
@@ -32,30 +58,30 @@ export function MemberProfile() {
           <div className="md:flex">
             <div className="md:w-1/3">
               <img
-                src={member.image}
-                alt={member.name}
+                src={member?.image_url}
+                alt={member?.name}
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="p-6 md:w-2/3">
               <div className="flex flex-wrap items-start justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-100">{member.name}</h1>
+                  <h1 className="text-3xl font-bold text-gray-100">{member?.name}</h1>
                   <span className="inline-block px-3 py-1 mt-2 text-sm font-medium text-white bg-blue-600 rounded-full">
-                    {member.category}
+                    {member?.category}
                   </span>
                 </div>
                 <div className="flex space-x-3 mt-4 md:mt-0">
                   <a
-                    href={`mailto:${member.email}`}
+                    href={`mailto:${member?.email}`}
                     className="text-gray-400 hover:text-gray-200"
                     title="Email"
                   >
                     <Mail className="h-5 w-5" />
                   </a>
-                  {member.socialLinks?.linkedin && (
+                  {member?.linkedin_url && (
                     <a
-                      href={member.socialLinks.linkedin}
+                      href={member?.linkedin_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-gray-200"
@@ -66,7 +92,7 @@ export function MemberProfile() {
                   )}
                 </div>
               </div>
-              <p className="mt-4 text-gray-400">{member.bio}</p>
+              <p className="mt-4 text-gray-400">{member?.bio}</p>
             </div>
           </div>
         </div>
@@ -75,11 +101,11 @@ export function MemberProfile() {
           {/* Research and Skills */}
           <div className="bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold text-gray-100 mb-4">Pesquisa Atual</h2>
-            <p className="text-gray-400 mb-6">{member.research}</p>
+            <p className="text-gray-400 mb-6">{member?.research}</p>
             
             <h3 className="text-lg font-semibold text-gray-100 mb-3">Proficiências</h3>
             <div className="flex flex-wrap gap-2">
-              {member.proficiencies.map((skill, index) => (
+              {Array.isArray(member?.proficiencies) && member.proficiencies.map((skill: string, index: number) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm"
@@ -94,7 +120,7 @@ export function MemberProfile() {
           <div className="bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold text-gray-100 mb-4">Formação Acadêmica</h2>
             <ul className="space-y-3">
-              {member.education.map((edu, index) => (
+              {Array.isArray(member?.education) && member.education.map((edu: string, index: number) => (
                 <li key={index} className="text-gray-400">
                   • {edu}
                 </li>
@@ -104,7 +130,7 @@ export function MemberProfile() {
         </div>
 
         {/* Publications */}
-        {member.publications.length > 0 && (
+        {Array.isArray(member?.publications) && member.publications.length > 0 && (
           <div className="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
             <div className="flex items-center mb-4">
               <BookOpen className="h-6 w-6 text-blue-600 mr-2" />
@@ -136,24 +162,21 @@ export function MemberProfile() {
             </div>
           </div>
         )}
-
-        {/* Awards */}
-        {member.awards.length > 0 && (
-          <div className="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <Award className="h-6 w-6 text-blue-600 mr-2" />
-              <h2 className="text-xl font-semibold text-gray-100">Prêmios e Reconhecimentos</h2>
-            </div>
-            <ul className="space-y-2">
-              {member.awards.map((award, index) => (
-                <li key={index} className="text-gray-400">
-                  • {award}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+        {member?.awards && member.awards.length > 0 && (
+  <div className="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
+    <div className="flex items-center mb-4">
+      <Award className="h-6 w-6 text-yellow-500 mr-2" />
+      <h2 className="text-xl font-semibold text-gray-100">Premiações</h2>
     </div>
-  );
+    <ul className="space-y-3 list-disc list-inside text-gray-400">
+      {Array.isArray(member.awards) && member.awards.map((award: string, index: number) => (
+        <li key={index}>{award}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
+    </div>
+  </div>
+);
 }

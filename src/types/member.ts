@@ -2,21 +2,18 @@ export type MemberCategory = 'Mestrado' | 'Doutorado' | 'Pós-Doutorado' | 'Grad
 
 export interface Member {
   id: string;
+  cpfcnpj: string,
   name: string;
   category: MemberCategory;
-  image: string;
+  image_url: string;
   research: string;
-  proficiencies: string[];
+  proficiencies: string;
   email: string;
-  education: string[];
-  publications: Publication[];
-  awards: string[];
+  education: string;
+  publications: Publication;
+  awards: string;
   bio: string;
-  socialLinks?: {
-    linkedin?: string;
-    researchGate?: string;
-    googleScholar?: string;
-  };
+  linkedin_url: string;
 }
 
 export interface Publication {

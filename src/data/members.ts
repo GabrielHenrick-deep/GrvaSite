@@ -3,9 +3,9 @@ import { Member } from '../types/member';
 export const members: Member[] = [
   {
     id: '1',
-    name: 'Dr. Ana Silva',
+    name: 'Dr. Ana Luiza',
     category: 'Pós-Doutorado',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300',
+    image_url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300',
     research: 'Pesquisa em biologia molecular com foco em genética de plantas',
     proficiencies: ['Biologia Molecular', 'Genética', 'Biotecnologia'],
     email: 'ana.silva@labresearch.com',
@@ -45,7 +45,7 @@ export const members: Member[] = [
     id: '2',
     name: 'João Santos',
     category: 'Doutorado',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300&h=300',
+    image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300&h=300',
     research: 'Desenvolvimento de algoritmos para análise de dados genômicos',
     proficiencies: ['Bioinformática', 'Python', 'Machine Learning'],
     email: 'joao.santos@labresearch.com',
@@ -75,7 +75,7 @@ export const members: Member[] = [
     id: '3',
     name: 'Maria Oliveira',
     category: 'Mestrado',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300&h=300',
+    image_url: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300&h=300',
     research: 'Estudo de microorganismos em ambientes extremos',
     proficiencies: ['Microbiologia', 'Análise Laboratorial', 'Bioquímica'],
     email: 'maria.oliveira@labresearch.com',
@@ -104,7 +104,7 @@ export const members: Member[] = [
     id: '4',
     name: 'Pedro Costa',
     category: 'Graduação',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300',
+    image_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300',
     research: 'Iniciação científica em ecologia marinha',
     proficiencies: ['Ecologia', 'Biologia Marinha', 'Coleta de Dados'],
     email: 'pedro.costa@labresearch.com',
@@ -116,8 +116,7 @@ export const members: Member[] = [
       'Menção Honrosa na Feira de Ciências 2023'
     ],
     bio: 'Estudante dedicado à pesquisa em ecologia marinha, com interesse especial em conservação de ecossistemas costeiros. Participa ativamente de projetos de monitoramento ambiental.',
-    socialLinks: {
       linkedin: 'https://linkedin.com/in/pedro-costa'
-    }
+    
   }
 ];
