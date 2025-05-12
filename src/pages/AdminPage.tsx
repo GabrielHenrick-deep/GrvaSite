@@ -121,15 +121,16 @@ const fetchProjects = () => {
       cpfcnpj: selectedMember?.cpfcnpj || '',
       name: selectedMember?.name || '',
       category: selectedMember?.category || '',
-      image_url: selectedMember?.image_url || '',
+      image: selectedMember?.image || '',
       research: selectedMember?.research || '',
-      proficiencies: selectedMember?.proficiencies || '',
+      proficiencias: selectedMember?.proficiencias || '',
       email: selectedMember?.email || '',
+      phone: selectedMember?.phone || '',
       education: selectedMember?.education || '',
-      publications: selectedMember?.publications || '',
+      publication: selectedMember?.publication || '',
       awards: selectedMember?.awards || '',
       bio: selectedMember?.bio || '',
-      linkedin_url: selectedMember?.linkedin_url || '',
+      linkedin: selectedMember?.linkedin || '',
     });
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
@@ -162,8 +163,9 @@ const fetchProjects = () => {
               { label: "Nome", name: "name", type: "text" },
               { label: "Categoria", name: "category", type: "text" },
               { label: "Email", name: "email", type: "email" },
-              { label: "Foto (URL)", name: "image_url", type: "url" },
-              { label: "LinkedIn", name: "linkedin_url", type: "text" },
+              { label: "Fone", name: "phone", type: "phone" },
+              { label: "Foto (URL)", name: "image", type: "url" },
+              { label: "LinkedIn", name: "linkedin", type: "text" },
             ].map(({ label, name, type }) => (
               <div key={name}>
                 <label className="block text-sm font-medium text-gray-300 mb-1">{label}</label>
@@ -180,7 +182,7 @@ const fetchProjects = () => {
 
           {[
             { label: "Pesquisa Atual", name: "research" },
-            { label: "Proficiências", name: "proficiencies" },
+            { label: "Proficiências", name: "proficiencias" },
             { label: "Premiações", name: "awards" },
             { label: "Formações", name: "education" },
             { label: "Biografia", name: "bio" },
@@ -257,7 +259,7 @@ const ProjectsForm = () => {
           { label: "URL da Imagem", name: "image_url", type: "text" },
           { label: "Nome", name: "nome_project", type: "text" }, // Fixed name
             { label: "Descrição", name: "descri", type: "text" },
-            { label: "Características", name: "key_feature", type: "text[]" }, 
+            { label: "Características", name: "key_feature", type: "text" }, 
         ].map(({ label, name, type }) => (
           <div key={name}>
             <label className="block text-sm font-medium text-gray-300 mb-1">{label}</label>
@@ -370,7 +372,7 @@ const ProjectsForm = () => {
                               <div className="flex items-center">
                                 <div className="h-10 w-10 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
                                   <img
-                                    src={member.image_url}
+                                    src={member.image}
                                     alt={member.name}
                                     className="h-full w-full object-cover"
                                     onError={(e) => { 

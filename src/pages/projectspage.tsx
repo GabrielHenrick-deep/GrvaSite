@@ -26,11 +26,7 @@ function Projectspage() {
           image_url: project.image_url,
           nome_project: project.nome_project,
           descri: project.descri,
-          key_feature: Array.isArray(project.key_fetuares) 
-            ? project.key_fetuares 
-            : typeof project.key_fetuares === 'string'
-              ? project.key_fetuares.split(',').map((s: string) => s.trim())
-              : []
+          key_feature: project.key_feature,
         }));
         setProjects(formattedProjects);
         setLoading(false);
@@ -106,11 +102,7 @@ function Projectspage() {
                     <p className="text-gray-400 mb-6">{project.descri}</p>
                     <div className="space-y-4">
                       <h3 className="font-semibold text-gray-200">Key Features:</h3>
-                      <ul className="list-disc list-inside text-gray-400 space-y-2">
-                        {project.key_feature.map((feature: string, i: number) => (
-                          <li key={i}>{feature}</li>
-                        ))}
-                      </ul>
+                      <p className="text-gray-400">{project.key_feature}</p>
                     </div>
                   </div>
                 </motion.div>

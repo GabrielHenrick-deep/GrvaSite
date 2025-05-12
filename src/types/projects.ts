@@ -4,5 +4,5 @@ export interface Projects
     image_url: string,
     nome_project: string,
     descri: string,
-    key_feature: string[]
+    key_feature: string
 }

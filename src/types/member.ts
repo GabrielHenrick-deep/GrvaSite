@@ -5,15 +5,16 @@ export interface Member {
   cpfcnpj: string,
   name: string;
   category: MemberCategory;
-  image_url: string;
+  image: string;
   research: string;
-  proficiencies: string;
+  proficiencias: string;
   email: string;
+  phone: string;
   education: string;
-  publications: Publication;
+  publication: Publication;
   awards: string;
   bio: string;
-  linkedin_url: string;
+  linkedin: string;
 }
 
 export interface Publication {
