@@ -12,17 +12,17 @@ export function MemberProfile() {
   useEffect(() => {
     if (!id) return;
   
-    fetch(`http://localhost:3001/members/${id}`)
+    fetch(`http://10.0.224.8:3001/members/${id}`)
       .then(res => res.json())
       .then(data => {
         console.log('Membro recebido:', data);
         setMember({
           ...data,
           // Faz split nas strings separadas por vírgula
-          proficiencies: Array.isArray(data.proficiencies)
-            ? data.proficiencies
-            : typeof data.proficiencies === 'string'
-            ? data.proficiencies.split(',').map((s: string) => s.trim())
+          proficiencias: Array.isArray(data.proficiencias)
+            ? data.proficiencias
+            : typeof data.proficiencias === 'string'
+            ? data.proficiencias.split(',').map((s: string) => s.trim())
             : [],
           education: typeof data.education === 'string'
             ? data.education.split(',').map((s: string) => s.trim())
@@ -58,7 +58,7 @@ export function MemberProfile() {
           <div className="md:flex">
             <div className="md:w-1/3">
               <img
-                src={member?.image_url}
+                src={member?.image}
                 alt={member?.name}
                 className="w-full h-full object-cover"
               />
@@ -79,9 +79,9 @@ export function MemberProfile() {
                   >
                     <Mail className="h-5 w-5" />
                   </a>
-                  {member?.linkedin_url && (
+                  {member?.linkedin && (
                     <a
-                      href={member?.linkedin_url}
+                      href={member?.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-gray-200"
@@ -105,7 +105,7 @@ export function MemberProfile() {
             
             <h3 className="text-lg font-semibold text-gray-100 mb-3">Proficiências</h3>
             <div className="flex flex-wrap gap-2">
-              {Array.isArray(member?.proficiencies) && member.proficiencies.map((skill: string, index: number) => (
+              {Array.isArray(member?.proficiencias) && member.proficiencias.map((skill: string, index: number) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm"
@@ -116,7 +116,7 @@ export function MemberProfile() {
             </div>
           </div>
 
-          {/* Education */}
+          {/* education */}
           <div className="bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold text-gray-100 mb-4">Formação Acadêmica</h2>
             <ul className="space-y-3">
@@ -130,14 +130,14 @@ export function MemberProfile() {
         </div>
 
         {/* Publications */}
-        {Array.isArray(member?.publications) && member.publications.length > 0 && (
+        {Array.isArray(member?.publication) && member.publication.length > 0 && (
           <div className="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
             <div className="flex items-center mb-4">
               <BookOpen className="h-6 w-6 text-blue-600 mr-2" />
               <h2 className="text-xl font-semibold text-gray-100">Publicações</h2>
             </div>
             <div className="space-y-6">
-              {member.publications.map((pub, index) => (
+              {member.publication.map((pub, index) => (
                 <div key={index} className="border-b border-gray-700 pb-4 last:border-0 last:pb-0">
                   <h3 className="text-lg text-gray-100 mb-2">{pub.title}</h3>
                   <p className="text-gray-400">

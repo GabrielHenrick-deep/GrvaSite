@@ -8,18 +8,28 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError('');
 
-    // TODO: Implement actual authentication
-    if (email === 'admin@labresearch.com' && password === 'admin') {
+    const response = await fetch('http://10.0.224.8:3001/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
       localStorage.setItem('isAuthenticated', 'true');
       navigate('/admin');
     } else {
-      setError('Credenciais inválidas');
+      const errorData = await response.json();
+      setError(errorData.detail || 'Erro ao autenticar');
     }
-  };
+
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">

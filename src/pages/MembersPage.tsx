@@ -12,7 +12,7 @@ export function MembersPage() {
   const [selectedCategory, setSelectedCategory] = useState<MemberCategory | 'all'>('all');
 
   useEffect(() => {
-    fetch('http://localhost:3001/members')
+    fetch('http://10.0.224.8:3001/members')
       .then(res => res.json())
       .then(data => {
         console.log('Dados recebidos:', data); // 👈 veja se os dados são o que espera

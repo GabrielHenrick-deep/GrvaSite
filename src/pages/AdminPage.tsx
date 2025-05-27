@@ -23,20 +23,20 @@ export function AdminPage() {
   const [isDialogOpenP, setIsDialogOpenP] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3001/members')
+    fetch('http://10.0.224.8:3001/members')
       .then(res => res.json())
       .then(data => setMembers(data))
       .catch(err => console.error('Erro ao buscar membros:', err));
   }, []);
 
   const fetchMembers = () => {
-    fetch('http://localhost:3001/members')
+    fetch('http://10.0.224.8:3001/members')
       .then(res => res.json())
       .then(data => setMembers(data))
       .catch(err => console.error('Erro ao buscar membros:', err));
   };
   useEffect(() => {
-    fetch('http://localhost:3001/projects')
+    fetch('http://10.0.224.8:3001/projects')
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error('Erro ao buscar projetos:', err));
@@ -70,13 +70,13 @@ const handleOpenDialogP = (type: 'projects' | 'article', item: Projects | NewsAr
 // Fixed handleDeleteProjects function
 const handleDeleteProjects = async (id: number) => {
   if (!confirm('Tem certeza que deseja excluir este projeto!?')) return;
-  await fetch(`http://localhost:3001/projects/${id}`, { method: 'DELETE' });
+  await fetch(`http://10.0.224.8:3001/projects/${id}`, { method: 'DELETE' });
   fetchProjects(); // Call fetchProjects instead of fetchMembers
 };
 
 // Fixed fetchProjects function
 const fetchProjects = () => {
-  fetch('http://localhost:3001/projects')
+  fetch('http://10.0.224.8:3001/projects')
     .then(res => res.json())
     .then(data => setProjects(data))
     .catch(err => console.error('Erro ao buscar projetos', err));
@@ -93,7 +93,7 @@ const fetchProjects = () => {
 
   const handleDeleteMember = async (id: number) => {
     if (!confirm('Tem certeza que deseja excluir este membro?')) return;
-    await fetch(`http://localhost:3001/members/${id}`, { method: 'DELETE' });
+    await fetch(`http://10.0.224.8:3001/members/${id}`, { method: 'DELETE' });
     fetchMembers();
   };
 
@@ -140,7 +140,7 @@ const fetchProjects = () => {
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       const method = isEditing ? 'PUT' : 'POST';
-      const url = isEditing ? `http://localhost:3001/members/${selectedMember?.id}` : 'http://localhost:3001/members';
+      const url = isEditing ? `http://10.0.224.8:3001/members/${selectedMember?.id}` : 'http://10.0.224.8:3001/members';
       await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -164,7 +164,7 @@ const fetchProjects = () => {
               { label: "Categoria", name: "category", type: "text" },
               { label: "Email", name: "email", type: "email" },
               { label: "Fone", name: "phone", type: "phone" },
-              { label: "Foto (URL)", name: "image", type: "url" },
+              { label: "Foto (URL)", name: "image", type: "text" },
               { label: "LinkedIn", name: "linkedin", type: "text" },
             ].map(({ label, name, type }) => (
               <div key={name}>
@@ -237,7 +237,7 @@ const ProjectsForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const method = isEditing ? 'PUT' : 'POST';
-    const url = isEditing ? `http://localhost:3001/projects/${selectedProjects?.id}` : 'http://localhost:3001/projects';
+    const url = isEditing ? `http://10.0.224.8:3001/projects/${selectedProjects?.id}` : 'http://10.0.224.8:3001/projects';
     await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
